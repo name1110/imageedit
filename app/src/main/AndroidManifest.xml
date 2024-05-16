@@ -34,6 +34,9 @@
             android:name=".view.ImageEditingActivity"
             android:exported="false" />
         <activity
+            android:name=".view.DrawTextActivity"
+            android:exported="false" />
+        <activity
             android:name=".view.MainActivity"
             android:exported="true">
             <intent-filter>

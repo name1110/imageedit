@@ -95,8 +95,9 @@ class AddImageActivity : AppCompatActivity() {
             // 检查是否已经选择了图片
             if (::selectedImage.isInitialized) {
                 // 如果已经选择了图片，则启动编辑界面
+                val compressedImage = compressImage(selectedImage,355,349)
                 val intent = Intent(this, ImageEditingActivity::class.java)
-                intent.putExtra("image", selectedImage) // Pass selected image to the editing activity
+                intent.putExtra("image", compressedImage) // Pass selected image to the editing activity
                 editImageLauncher.launch(intent)
             } else {
                 // 如果没有选择图片，可以给出提示或者提供默认图片
@@ -170,4 +171,21 @@ class AddImageActivity : AppCompatActivity() {
             activityResultLauncherForSelectImage.launch(intent)
         }
     }
+    fun compressImage(bitmap: Bitmap, maxWidth: Int, maxHeight: Int): Bitmap {
+        var width = bitmap.width
+        var height = bitmap.height
+
+        val aspectRatio: Float = width.toFloat() / height.toFloat()
+
+        if (width > height) {
+            width = maxWidth
+            height = (width / aspectRatio).toInt()
+        } else {
+            height = maxHeight
+            width = (height * aspectRatio).toInt()
+        }
+
+        return Bitmap.createScaledBitmap(bitmap, width, height, true)
+    }
+
 }

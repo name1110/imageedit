@@ -25,7 +25,6 @@ import android.provider.MediaStore
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 
-
 class ImageEditingActivity : AppCompatActivity() {
     private lateinit var imageView: ImageView
     private lateinit var cropImage: ActivityResultLauncher<CropImageContractOptions>
@@ -45,6 +44,7 @@ class ImageEditingActivity : AppCompatActivity() {
         // 获取 ImageView 对象并设置 Bitmap
         imageView = findViewById<ImageView>(R.id.imageedit)
         imageView.setImageBitmap(editimage)
+
 
         // 初始化裁剪图片的ActivityResultLauncher
         cropImage = registerForActivityResult(CropImageContract()) { result ->
@@ -85,7 +85,14 @@ class ImageEditingActivity : AppCompatActivity() {
                 startActivityForResult(intent, DRAW_REQUEST_CODE)
             }
         }
-
+        findViewById<Button>(R.id.btntext).setOnClickListener {
+            editimage?.let {
+                val intent = Intent(this, DrawTextActivity::class.java).apply {
+                    putExtra("image", it)
+                }
+                startActivityForResult(intent, DRAW_REQUEST_CODE)
+            }
+        }
         findViewById<Button>(R.id.btncut).setOnClickListener {
             // 启动裁剪界面
             editimage?.let {
