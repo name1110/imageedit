@@ -29,6 +29,7 @@ import androidx.activity.result.contract.ActivityResultContracts
 class ImageEditingActivity : AppCompatActivity() {
     private lateinit var imageView: ImageView
     private lateinit var cropImage: ActivityResultLauncher<CropImageContractOptions>
+    private var editimage: Bitmap? = null // 将 editedBitmap 声明在类级别
 
     companion object {
         const val DRAW_REQUEST_CODE = 1 // 定义一个请求码
@@ -39,11 +40,11 @@ class ImageEditingActivity : AppCompatActivity() {
         setContentView(R.layout.editing_image)
 
         // 获取 Intent 中的照片数据
-        val selectedImage = intent.getParcelableExtra<Bitmap>("image")
+        editimage = intent.getParcelableExtra<Bitmap>("image")
 
         // 获取 ImageView 对象并设置 Bitmap
         imageView = findViewById<ImageView>(R.id.imageedit)
-        imageView.setImageBitmap(selectedImage)
+        imageView.setImageBitmap(editimage)
 
         // 初始化裁剪图片的ActivityResultLauncher
         cropImage = registerForActivityResult(CropImageContract()) { result ->
@@ -52,6 +53,8 @@ class ImageEditingActivity : AppCompatActivity() {
                 val uriContent = result.uriContent
                 // 将裁剪后的图片设置到ImageView
                 imageView.setImageURI(uriContent)
+                val bitmap = MediaStore.Images.Media.getBitmap(this.contentResolver, uriContent)
+                editimage = bitmap
             } else {
                 // 处理错误情况
                 val exception = result.error
@@ -75,7 +78,7 @@ class ImageEditingActivity : AppCompatActivity() {
             }
         }
         findViewById<Button>(R.id.btndraw).setOnClickListener {
-            selectedImage?.let {
+            editimage?.let {
                 val intent = Intent(this, MyPaintToolsActivity::class.java).apply {
                     putExtra("image", it)
                 }
@@ -85,7 +88,7 @@ class ImageEditingActivity : AppCompatActivity() {
 
         findViewById<Button>(R.id.btncut).setOnClickListener {
             // 启动裁剪界面
-            selectedImage?.let {
+            editimage?.let {
                 val uri = getImageUriFromBitmap(this, it)
                 val options = CropImageOptions().apply{
                     guidelines = Guidelines.ON
@@ -125,6 +128,7 @@ class ImageEditingActivity : AppCompatActivity() {
             editedImage?.let {
                 // 将编辑后的图像设置到ImageView或者进行其他操作
                 imageView.setImageBitmap(it)
+                editimage = it
             }
         }
     }
