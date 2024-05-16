@@ -20,7 +20,7 @@
         <activity
             android:name=".view.UpdateImageActivity"
             android:exported="false" />
-        <activity android:name=".view.cropactivity"
+        <activity android:name=".view.MyPaintToolsActivity"
             android:exported="false"/>
         <activity
             android:name="com.canhub.cropper.CropImageActivity"

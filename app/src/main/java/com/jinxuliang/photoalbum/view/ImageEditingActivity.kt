@@ -1,5 +1,6 @@
 package com.jinxuliang.photoalbum.view
 
+import android.app.Activity
 import android.graphics.drawable.BitmapDrawable
 import android.widget.Button
 import android.content.Intent
@@ -29,6 +30,10 @@ class ImageEditingActivity : AppCompatActivity() {
     private lateinit var imageView: ImageView
     private lateinit var cropImage: ActivityResultLauncher<CropImageContractOptions>
 
+    companion object {
+        const val DRAW_REQUEST_CODE = 1 // 定义一个请求码
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.editing_image)
@@ -53,16 +58,28 @@ class ImageEditingActivity : AppCompatActivity() {
                 exception?.printStackTrace()
             }
 
-            findViewById<Button>(R.id.btndone).setOnClickListener {
-                // 将ImageView中的图片转换为Bitmap
-                imageView.drawable?.let {
-                    val bitmap = (it as BitmapDrawable).bitmap
-                    val resultIntent = Intent().apply {
-                        putExtra("edited_image", bitmap)
-                    }
-                    setResult(RESULT_OK, resultIntent)
-                    finish()
+
+
+
+        }
+
+        findViewById<Button>(R.id.btndone).setOnClickListener {
+            // 将ImageView中的图片转换为Bitmap
+            imageView.drawable?.let {
+                val bitmap = (it as BitmapDrawable).bitmap
+                val resultIntent = Intent().apply {
+                    putExtra("edited_image", bitmap)
                 }
+                setResult(RESULT_OK, resultIntent)
+                finish()
+            }
+        }
+        findViewById<Button>(R.id.btndraw).setOnClickListener {
+            selectedImage?.let {
+                val intent = Intent(this, MyPaintToolsActivity::class.java).apply {
+                    putExtra("image", it)
+                }
+                startActivityForResult(intent, DRAW_REQUEST_CODE)
             }
         }
 
@@ -98,6 +115,18 @@ class ImageEditingActivity : AppCompatActivity() {
         bitmap.compress(Bitmap.CompressFormat.JPEG, 100, bytes)
         val path = MediaStore.Images.Media.insertImage(context.contentResolver, bitmap, "Title", null)
         return Uri.parse(path)
+    }
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == DRAW_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
+            // 检查是否返回了编辑后的图像
+            val editedImage = data?.getParcelableExtra<Bitmap>("edited_image")
+            // 在这里处理编辑后的图像
+            editedImage?.let {
+                // 将编辑后的图像设置到ImageView或者进行其他操作
+                imageView.setImageBitmap(it)
+            }
+        }
     }
 
 }
