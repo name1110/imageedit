@@ -23,6 +23,11 @@
         <activity android:name=".view.cropactivity"
             android:exported="false"/>
         <activity
+            android:name="com.canhub.cropper.CropImageActivity"
+            android:theme="@style/Base.Theme.AppCompat"
+            />
+
+        <activity
             android:name=".view.AddImageActivity"
             android:exported="false" />
         <activity

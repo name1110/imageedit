@@ -30,4 +30,12 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.847" />
 
+    <Button
+        android:id="@+id/btndone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="完成"
+        tools:layout_editor_absoluteX="7dp"
+        tools:layout_editor_absoluteY="682dp" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

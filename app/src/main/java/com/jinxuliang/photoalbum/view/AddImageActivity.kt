@@ -30,6 +30,7 @@ class AddImageActivity : AppCompatActivity() {
     lateinit var activityResultLauncherForSelectImage: ActivityResultLauncher<Intent>
     lateinit var selectedImage: Bitmap
     lateinit var myImagesViewModel: MyImagesViewModel
+    private lateinit var editImageLauncher: ActivityResultLauncher<Intent>
     //用于判断当前是否正在存取数据库
     var saveFlag = false
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -41,6 +42,8 @@ class AddImageActivity : AppCompatActivity() {
         myImagesViewModel = ViewModelProvider(this)[MyImagesViewModel::class.java]
         //注册回调方法，获取用户从MediaStore中选择的图片
         registerActivityForSelectImage()
+        //注册编辑的回调方法
+        registerActivityForEditImage()
         //用户点击Activity上的图片，说明他想选择要收藏的图片
         addImageBinding.imageViewAddImage.setOnClickListener {
             //检查权限
@@ -94,7 +97,7 @@ class AddImageActivity : AppCompatActivity() {
                 // 如果已经选择了图片，则启动编辑界面
                 val intent = Intent(this, ImageEditingActivity::class.java)
                 intent.putExtra("image", selectedImage) // Pass selected image to the editing activity
-                startActivity(intent)
+                editImageLauncher.launch(intent)
             } else {
                 // 如果没有选择图片，可以给出提示或者提供默认图片
                 Toast.makeText(applicationContext, "请先选择一张图片", Toast.LENGTH_SHORT).show()
@@ -131,6 +134,24 @@ class AddImageActivity : AppCompatActivity() {
                     }
                 }
             }
+    }
+    fun registerActivityForEditImage() {
+        editImageLauncher = registerForActivityResult(
+            ActivityResultContracts.StartActivityForResult()) { result ->
+            //获取用户编辑后的图片结果
+            val resultCode = result.resultCode
+            val imageData = result.data
+            //用户确定编辑了图片
+            if (resultCode == RESULT_OK && imageData != null) {
+                val editedImage = imageData.getParcelableExtra<Bitmap>("edited_image")
+                editedImage?.let {
+                    // 将编辑后的图片显示在ImageView中
+                    selectedImage = it
+                    addImageBinding.imageViewAddImage.setImageBitmap(selectedImage)
+                    saveFlag = true
+                }
+            }
+        }
     }
 
     //处理权限许可结果
