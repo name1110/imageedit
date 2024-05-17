@@ -33,6 +33,7 @@ class ImageEditingActivity : AppCompatActivity() {
     companion object {
         const val DRAW_REQUEST_CODE = 1 // 定义一个请求码
         const val TEXT_REQUEST_CODE = 2
+        const val FILTER_REQUEST_CODE = 3
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -94,6 +95,14 @@ class ImageEditingActivity : AppCompatActivity() {
                 startActivityForResult(intent, TEXT_REQUEST_CODE)
             }
         }
+        findViewById<Button>(R.id.btnfilter).setOnClickListener {
+            editimage?.let {
+                val intent = Intent(this, FilterImageActivity::class.java).apply {
+                    putExtra("image", it)
+                }
+                startActivityForResult(intent, FILTER_REQUEST_CODE)
+            }
+        }
         findViewById<Button>(R.id.btncut).setOnClickListener {
             // 启动裁剪界面
             editimage?.let {
@@ -140,6 +149,16 @@ class ImageEditingActivity : AppCompatActivity() {
             }
         }
         if (requestCode == TEXT_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
+            // 检查是否返回了编辑后的图像
+            val editedImage = data?.getParcelableExtra<Bitmap>("edited_image")
+            // 在这里处理编辑后的图像
+            editedImage?.let {
+                // 将编辑后的图像设置到ImageView或者进行其他操作
+                imageView.setImageBitmap(it)
+                editimage = it
+            }
+        }
+        if (requestCode == FILTER_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
             // 检查是否返回了编辑后的图像
             val editedImage = data?.getParcelableExtra<Bitmap>("edited_image")
             // 在这里处理编辑后的图像

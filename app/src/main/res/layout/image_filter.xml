@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/ll_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".DrawTextActivity">
+
+    <ja.burhanrashid52.photoeditor.PhotoEditorView
+        android:id="@+id/photoEditorView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1" />
+
+    <Button
+        android:id="@+id/btn_draw"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="生成" />
+
+    <Button
+        android:id="@+id/btn_save"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="保存图片" />
+
+
+    <RadioGroup
+        android:id="@+id/rg_color"
+        android:layout_width="match_parent"
+        android:layout_height="129dp"
+        android:orientation="horizontal">
+
+        <RadioButton
+            android:id="@+id/BLACK_WHITE"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="黑白"
+            android:textColor="#FF0000" />
+
+
+        <RadioButton
+            android:id="@+id/FISH_EYE"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="鱼眼"
+            android:textColor="#FF0000" />
+
+        <RadioButton
+            android:id="@+id/LOMISH"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="洛蜜色调"
+            android:textColor="#FF0000" />
+
+        <RadioButton
+            android:id="@+id/NEGATIVE"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="底片"
+            android:textColor="#FF0000" />
+
+        <RadioButton
+            android:id="@+id/VIGENTTE"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="晕影"
+            android:textColor="#FF0000" />
+
+        <RadioButton
+            android:id="@+id/SHARPEN"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="锐化"
+            android:textColor="#FF0000" />
+
+    </RadioGroup>
+
+</LinearLayout>

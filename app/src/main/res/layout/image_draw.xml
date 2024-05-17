@@ -19,14 +19,14 @@
         android:id="@+id/rg_color"
         android:layout_height="wrap_content">
         <RadioButton
-            android:id="@+id/rb_red"
+            android:id="@+id/BLACK_WHITE"
             android:layout_width="wrap_content"
             android:layout_height="30dp"
             android:layout_weight="1"
             android:text="红色"
             android:textColor="#FF1400"/>
         <RadioButton
-            android:id="@+id/rb_green"
+            android:id="@+id/FILL_LIGHT"
             android:layout_width="wrap_content"
             android:layout_height="30dp"
             android:layout_weight="1"
