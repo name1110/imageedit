@@ -4,6 +4,7 @@ import android.app.Activity
 import android.content.Intent
 import android.graphics.*
 import android.os.Bundle
+import android.util.Log
 import android.view.MotionEvent
 import android.view.View
 import android.widget.*
@@ -11,10 +12,17 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.res.ResourcesCompat
 import com.jinxuliang.photoalbum.R
 import ja.burhanrashid52.photoeditor.OnPhotoEditorListener
+import ja.burhanrashid52.photoeditor.OnSaveBitmap
 import ja.burhanrashid52.photoeditor.PhotoEditor
 import ja.burhanrashid52.photoeditor.PhotoEditorView
+import ja.burhanrashid52.photoeditor.SaveSettings
 import ja.burhanrashid52.photoeditor.ViewType
-
+import java.io.ByteArrayOutputStream
+import androidx.annotation.NonNull
+import androidx.lifecycle.lifecycleScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class DrawTextActivity : AppCompatActivity() {
 
@@ -54,6 +62,8 @@ class DrawTextActivity : AppCompatActivity() {
 
         // 处理保存按钮点击事件
         findViewById<Button>(R.id.btn_save).setOnClickListener {
+            saveImage()
+            finish()
         }
 
         photoEditor.setOnPhotoEditorListener(object : OnPhotoEditorListener {
@@ -84,9 +94,10 @@ class DrawTextActivity : AppCompatActivity() {
         })
 
 
-        // 处理文本大小拖动条变化事件
 
     }
+
+
 
 
 
@@ -101,4 +112,22 @@ class DrawTextActivity : AppCompatActivity() {
             else -> Color.BLACK
         }
     }
+    private fun saveImage() {
+// Please note that if you call this from a fragment, you should call
+// 'viewLifecycleOwner.lifecycleScope.launch' instead.
+        lifecycleScope.launch {
+            val result = photoEditor.saveAsBitmap()
+            // 将绘制的 Bitmap 放置到 Intent 中
+            val scaledBitmap = Bitmap.createScaledBitmap(result, (result.width / 2.5).toInt(), (result.height / 2.5).toInt(), true)
+            val resultIntent = Intent().apply {
+                putExtra("edited_image", scaledBitmap)
+            }
+            setResult(Activity.RESULT_OK, resultIntent)
+
+
+        }
+    }
+
+
+
 }
