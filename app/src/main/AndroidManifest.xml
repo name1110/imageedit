@@ -7,6 +7,9 @@
 
     <uses-permission android:name="android.permission.READ_MEDIA_IMAGES"/>
 
+    <uses-permission android:name="android.permission.INTERNET" />
+
+
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
@@ -38,6 +41,9 @@
             android:exported="false" />
         <activity
             android:name=".view.FilterImageActivity"
+            android:exported="false" />
+        <activity
+            android:name=".view.ImageAiEditing4colorizeActivity"
             android:exported="false" />
         <activity
             android:name=".view.MainActivity"

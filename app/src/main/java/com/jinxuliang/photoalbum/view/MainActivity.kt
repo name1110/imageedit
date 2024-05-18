@@ -12,6 +12,9 @@ import com.jinxuliang.photoalbum.adapter.MyImagesAdapter
 import com.jinxuliang.photoalbum.databinding.ActivityMainBinding
 import com.jinxuliang.photoalbum.viewmodel.MyImagesViewModel
 
+
+
+
 class MainActivity : AppCompatActivity() {
     lateinit var myImagesViewModel: MyImagesViewModel
     lateinit var mainBinding: ActivityMainBinding

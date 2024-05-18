@@ -7,13 +7,8 @@ import android.content.Intent
 import android.graphics.Bitmap
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import kotlinx.coroutines.launch
-import android.graphics.BitmapFactory
-import android.util.Log
 import android.widget.ImageView
 import com.jinxuliang.photoalbum.R
-import com.canhub.cropper.CropImage
-import com.canhub.cropper.CropImageView
 import com.canhub.cropper.CropImageContract
 import com.canhub.cropper.CropImageOptions
 import com.canhub.cropper.CropImageView.Guidelines
@@ -23,7 +18,7 @@ import java.io.ByteArrayOutputStream
 import android.content.Context
 import android.provider.MediaStore
 import androidx.activity.result.ActivityResultLauncher
-import androidx.activity.result.contract.ActivityResultContracts
+
 
 class ImageEditingActivity : AppCompatActivity() {
     private lateinit var imageView: ImageView
@@ -34,6 +29,7 @@ class ImageEditingActivity : AppCompatActivity() {
         const val DRAW_REQUEST_CODE = 1 // 定义一个请求码
         const val TEXT_REQUEST_CODE = 2
         const val FILTER_REQUEST_CODE = 3
+        const val COLERIZED_REQUEST_CODE = 4
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -87,12 +83,12 @@ class ImageEditingActivity : AppCompatActivity() {
                 startActivityForResult(intent, DRAW_REQUEST_CODE)
             }
         }
-        findViewById<Button>(R.id.btntext).setOnClickListener {
+        findViewById<Button>(R.id.btncolorize).setOnClickListener {
             editimage?.let {
-                val intent = Intent(this, DrawTextActivity::class.java).apply {
+                val intent = Intent(this, ImageAiEditing4colorizeActivity::class.java).apply {
                     putExtra("image", it)
                 }
-                startActivityForResult(intent, TEXT_REQUEST_CODE)
+                startActivityForResult(intent, COLERIZED_REQUEST_CODE)
             }
         }
         findViewById<Button>(R.id.btnfilter).setOnClickListener {
@@ -161,6 +157,16 @@ class ImageEditingActivity : AppCompatActivity() {
         if (requestCode == FILTER_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
             // 检查是否返回了编辑后的图像
             val editedImage = data?.getParcelableExtra<Bitmap>("edited_image")
+            // 在这里处理编辑后的图像
+            editedImage?.let {
+                // 将编辑后的图像设置到ImageView或者进行其他操作
+                imageView.setImageBitmap(it)
+                editimage = it
+            }
+        }
+        if (requestCode == COLERIZED_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
+            // 检查是否返回了编辑后的图像
+            val editedImage = data?.getParcelableExtra<Bitmap>("processedImage")
             // 在这里处理编辑后的图像
             editedImage?.let {
                 // 将编辑后的图像设置到ImageView或者进行其他操作
