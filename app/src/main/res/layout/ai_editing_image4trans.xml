@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:id="@+id/imageedit"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="fitCenter"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0"
+        tools:srcCompat="@tools:sample/backgrounds/scenic" />
+
+    <Button
+        android:id="@+id/btndone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="完成"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.761"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.79" />
+
+    <Button
+        android:id="@+id/btnprocess"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="生成"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.185"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/imageedit"
+        app:layout_constraintVertical_bias="0.79" />
+
+    <RadioGroup
+        android:id="@+id/rg_color"
+        android:layout_width="match_parent"
+        android:layout_height="129dp"
+        android:orientation="horizontal"
+        tools:layout_editor_absoluteX="25dp"
+        tools:layout_editor_absoluteY="626dp">
+
+        <RadioButton
+            android:id="@+id/cartoone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="卡通"
+            android:textColor="#FF0000" />
+
+
+        <RadioButton
+            android:id="@+id/pencil"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="铅笔"
+            android:textColor="#FF0000" />
+
+        <RadioButton
+            android:id="@+id/wave"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="神奈川"
+            android:textColor="#FF0000" />
+
+        <RadioButton
+            android:id="@+id/NEGATIVE"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="底片"
+            android:textColor="#FF0000" />
+
+        <RadioButton
+            android:id="@+id/scream"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="呐喊"
+            android:textColor="#FF0000" />
+
+        <RadioButton
+            android:id="@+id/gothic"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="哥特"
+            android:textColor="#FF0000" />
+
+    </RadioGroup>
+</androidx.constraintlayout.widget.ConstraintLayout>

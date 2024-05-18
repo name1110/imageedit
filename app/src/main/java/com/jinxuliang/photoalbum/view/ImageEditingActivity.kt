@@ -30,6 +30,8 @@ class ImageEditingActivity : AppCompatActivity() {
         const val TEXT_REQUEST_CODE = 2
         const val FILTER_REQUEST_CODE = 3
         const val COLERIZED_REQUEST_CODE = 4
+        const val TRANS_REQUEST_CODE = 5
+        const val ACG_REQUEST_CODE = 6
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -89,6 +91,22 @@ class ImageEditingActivity : AppCompatActivity() {
                     putExtra("image", it)
                 }
                 startActivityForResult(intent, COLERIZED_REQUEST_CODE)
+            }
+        }
+        findViewById<Button>(R.id.btntrans).setOnClickListener {
+            editimage?.let {
+                val intent = Intent(this, ImageAiEditing4transActivity::class.java).apply {
+                    putExtra("image", it)
+                }
+                startActivityForResult(intent, TRANS_REQUEST_CODE)
+            }
+        }
+        findViewById<Button>(R.id.btnacg).setOnClickListener {
+            editimage?.let {
+                val intent = Intent(this, ImageAiEditing4acgActivity::class.java).apply {
+                    putExtra("image", it)
+                }
+                startActivityForResult(intent, ACG_REQUEST_CODE)
             }
         }
         findViewById<Button>(R.id.btnfilter).setOnClickListener {
@@ -165,6 +183,26 @@ class ImageEditingActivity : AppCompatActivity() {
             }
         }
         if (requestCode == COLERIZED_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
+            // 检查是否返回了编辑后的图像
+            val editedImage = data?.getParcelableExtra<Bitmap>("processedImage")
+            // 在这里处理编辑后的图像
+            editedImage?.let {
+                // 将编辑后的图像设置到ImageView或者进行其他操作
+                imageView.setImageBitmap(it)
+                editimage = it
+            }
+        }
+        if (requestCode == TRANS_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
+            // 检查是否返回了编辑后的图像
+            val editedImage = data?.getParcelableExtra<Bitmap>("processedImage")
+            // 在这里处理编辑后的图像
+            editedImage?.let {
+                // 将编辑后的图像设置到ImageView或者进行其他操作
+                imageView.setImageBitmap(it)
+                editimage = it
+            }
+        }
+        if (requestCode == ACG_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
             // 检查是否返回了编辑后的图像
             val editedImage = data?.getParcelableExtra<Bitmap>("processedImage")
             // 在这里处理编辑后的图像

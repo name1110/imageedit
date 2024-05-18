@@ -46,6 +46,12 @@
             android:name=".view.ImageAiEditing4colorizeActivity"
             android:exported="false" />
         <activity
+            android:name=".view.ImageAiEditing4transActivity"
+            android:exported="false" />
+        <activity
+            android:name=".view.ImageAiEditing4acgActivity"
+            android:exported="false" />
+        <activity
             android:name=".view.MainActivity"
             android:exported="true">
             <intent-filter>
