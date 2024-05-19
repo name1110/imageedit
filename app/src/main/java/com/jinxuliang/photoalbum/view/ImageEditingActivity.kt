@@ -26,6 +26,7 @@ class ImageEditingActivity : AppCompatActivity() {
     private var editimage: Bitmap? = null // 将 editedBitmap 声明在类级别
 
     companion object {
+        const val CROP_REQUEST_CODE = 0
         const val DRAW_REQUEST_CODE = 1 // 定义一个请求码
         const val TEXT_REQUEST_CODE = 2
         const val FILTER_REQUEST_CODE = 3
@@ -46,26 +47,6 @@ class ImageEditingActivity : AppCompatActivity() {
         imageView.setImageBitmap(editimage)
 
 
-        // 初始化裁剪图片的ActivityResultLauncher
-        cropImage = registerForActivityResult(CropImageContract()) { result ->
-            if (result.isSuccessful) {
-                // 获取裁剪后的图片Uri
-                val uriContent = result.uriContent
-                // 将裁剪后的图片设置到ImageView
-                imageView.setImageURI(uriContent)
-                val bitmap = MediaStore.Images.Media.getBitmap(this.contentResolver, uriContent)
-                editimage = bitmap
-            } else {
-                // 处理错误情况
-                val exception = result.error
-                exception?.printStackTrace()
-            }
-
-
-
-
-        }
-
         findViewById<Button>(R.id.btndone).setOnClickListener {
             // 将ImageView中的图片转换为Bitmap
             imageView.drawable?.let {
@@ -78,6 +59,14 @@ class ImageEditingActivity : AppCompatActivity() {
             }
         }
         findViewById<Button>(R.id.btndraw).setOnClickListener {
+            editimage?.let {
+                val intent = Intent(this, MyPaintToolsActivity::class.java).apply {
+                    putExtra("image", it)
+                }
+                startActivityForResult(intent, DRAW_REQUEST_CODE)
+            }
+        }
+        findViewById<Button>(R.id.btncut).setOnClickListener {
             editimage?.let {
                 val intent = Intent(this, MyPaintToolsActivity::class.java).apply {
                     putExtra("image", it)
@@ -101,6 +90,14 @@ class ImageEditingActivity : AppCompatActivity() {
                 startActivityForResult(intent, TRANS_REQUEST_CODE)
             }
         }
+        findViewById<Button>(R.id.btnprocess).setOnClickListener {
+            editimage?.let {
+                val intent = Intent(this, DrawTextActivity::class.java).apply {
+                    putExtra("image", it)
+                }
+                startActivityForResult(intent, TEXT_REQUEST_CODE)
+            }
+        }
         findViewById<Button>(R.id.btnacg).setOnClickListener {
             editimage?.let {
                 val intent = Intent(this, ImageAiEditing4acgActivity::class.java).apply {
@@ -120,36 +117,18 @@ class ImageEditingActivity : AppCompatActivity() {
         findViewById<Button>(R.id.btncut).setOnClickListener {
             // 启动裁剪界面
             editimage?.let {
-                val uri = getImageUriFromBitmap(this, it)
-                val options = CropImageOptions().apply{
-                    guidelines = Guidelines.ON
-                    activityTitle = "Crop Image"
-                    outputCompressFormat = Bitmap.CompressFormat.PNG
-                    fixAspectRatio = false
-                    allowRotation = true
-                    allowFlipping = true
-                    allowCounterRotation = true
-                    autoZoomEnabled = true
-                    multiTouchEnabled = true
-                    maxZoom = 4
-                    showCropOverlay = true
-                    showProgressBar = true
-                    cropMenuCropButtonTitle = "Done"
+                val intent = Intent(this, CropImageActivity::class.java).apply {
+                    putExtra("image", it)
                 }
-
-
-                cropImage.launch(CropImageContractOptions(uri, options))
+                startActivityForResult(intent, FILTER_REQUEST_CODE)
             }
+
         }
     }
 
     // 辅助函数，用于将Bitmap转换为Uri
-    private fun getImageUriFromBitmap(context: Context, bitmap: Bitmap): Uri {
-        val bytes = ByteArrayOutputStream()
-        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, bytes)
-        val path = MediaStore.Images.Media.insertImage(context.contentResolver, bitmap, "Title", null)
-        return Uri.parse(path)
-    }
+// 辅助函数，用于将Bitmap转换为Uri
+
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == DRAW_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
@@ -205,6 +184,16 @@ class ImageEditingActivity : AppCompatActivity() {
         if (requestCode == ACG_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
             // 检查是否返回了编辑后的图像
             val editedImage = data?.getParcelableExtra<Bitmap>("processedImage")
+            // 在这里处理编辑后的图像
+            editedImage?.let {
+                // 将编辑后的图像设置到ImageView或者进行其他操作
+                imageView.setImageBitmap(it)
+                editimage = it
+            }
+        }
+        if (requestCode == CROP_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
+            // 检查是否返回了编辑后的图像
+            val editedImage = data?.getParcelableExtra<Bitmap>("edited_image")
             // 在这里处理编辑后的图像
             editedImage?.let {
                 // 将编辑后的图像设置到ImageView或者进行其他操作
