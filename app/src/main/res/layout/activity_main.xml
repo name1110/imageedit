@@ -14,12 +14,12 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
-        
+
         <com.google.android.material.appbar.MaterialToolbar
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            app:title="我最喜欢的相片"
-            app:titleTextColor="?attr/colorOnPrimary"/>
+            app:title="图片收藏夹"
+            app:titleTextColor="?attr/colorOnPrimary" />
     </com.google.android.material.appbar.AppBarLayout>
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView"

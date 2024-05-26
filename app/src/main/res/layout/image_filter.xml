@@ -34,10 +34,10 @@
         android:orientation="horizontal">
 
         <RadioButton
-            android:id="@+id/BLACK_WHITE"
+            android:id="@+id/GRAY_SCALE"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="黑白"
+            android:text="灰度"
             android:textColor="#FF0000" />
 
 

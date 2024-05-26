@@ -20,14 +20,14 @@
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             app:navigationIcon="@drawable/arrow_back"
-            app:title="收藏相片"
+            app:title="带编辑的图片"
             app:titleTextColor="?attr/colorOnPrimary" />
     </com.google.android.material.appbar.AppBarLayout>
 
     <ImageView
         android:id="@+id/imageViewAddImage"
-        android:layout_width="300dp"
-        android:layout_height="250dp"
+        android:layout_width="390dp"
+        android:layout_height="422dp"
         android:layout_marginStart="32dp"
         android:layout_marginTop="24dp"
         android:layout_marginEnd="32dp"
@@ -38,8 +38,8 @@
         app:layout_constraintTop_toBottomOf="@+id/appBarLayoutAddImage" />
 
     <LinearLayout
-        android:layout_width="370dp"
-        android:layout_height="373dp"
+        android:layout_width="348dp"
+        android:layout_height="174dp"
         android:layout_marginStart="24dp"
         android:layout_marginEnd="24dp"
         android:gravity="center"
@@ -50,33 +50,12 @@
         app:layout_constraintTop_toBottomOf="@+id/imageViewAddImage"
         app:layout_constraintVertical_bias="0.5">
 
-        <EditText
-            android:id="@+id/edtAddTitle"
-            android:layout_width="300dp"
-            android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:ems="10"
-            android:hint="添加标题"
-            android:inputType="text"
-            android:textColor="#3F51B5" />
-
-        <EditText
-            android:id="@+id/edtAddDescription"
-            android:layout_width="300dp"
-            android:layout_height="100dp"
-            android:layout_margin="10dp"
-            android:ems="10"
-            android:gravity="start|top"
-            android:hint="添加图片说明"
-            android:inputType="textMultiLine"
-            android:textColor="@color/black" />
-
         <Button
             android:id="@+id/btnAdd"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
-            android:text="添加到相册"
+            android:text="直接收藏"
             android:textSize="20sp" />
 
         <Button

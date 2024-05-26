@@ -4,8 +4,9 @@ plugins {
     id("com.google.devtools.ksp")
 }
 
+
 android {
-    namespace = "com.jinxuliang.photoalbum"
+    namespace = "com.name1110.photoeditor"
     compileSdk = 34
 
     buildFeatures{
@@ -13,7 +14,7 @@ android {
     }
 
     defaultConfig {
-        applicationId = "com.jinxuliang.photoalbum"
+        applicationId = "com.name1110.photoeditor"
         minSdk = 29
         targetSdk = 34
         versionCode = 1
