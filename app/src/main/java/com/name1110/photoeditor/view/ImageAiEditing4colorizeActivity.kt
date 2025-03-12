@@ -101,8 +101,8 @@ class ImageAiEditing4colorizeActivity : AppCompatActivity() {
                 val imgStr = bitmapToBase64(backgroundImage)
                 val imgParam = URLEncoder.encode(imgStr, "UTF-8")
                 val param = "image=$imgParam"
-                val clientid = "RwC27AIpMsWmdiYSfhKSrRhz"
-                val clientsecret = "4lxCgl8t3wrHUTdKKYFQknr04bNOXndD"
+                val clientid = "xxxxxxx"
+                val clientsecret = "xxxxxxxxx"
 
                 val baiduAuth = BaiduAuth(clientid, clientsecret)
                 val accessToken = try {
